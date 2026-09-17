@@ -24,8 +24,7 @@
     "react-dom": "^19.0.1",
     "react-router-dom": "^7.18.3",
     "recharts": "^3.10.1",
-    "sonner": "^2.0.8",
-    "vite": "^6.2.3"
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@firebase/eslint-plugin-security-rules": "^0.0.2",
