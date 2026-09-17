@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User specific settings and configuration",
+      "type": "object",
+      "properties": {
+        "icr": { "type": "number", "description": "Insulin to Carb Ratio" },
+        "isf": { "type": "number", "description": "Insulin Sensitivity Factor" },
+        "targetBg": { "type": "number", "description": "Target Blood Glucose" },
+        "lowBgLimit": { "type": "number", "description": "Low Blood Glucose Limit" },
+        "highBgLimit": { "type": "number", "description": "High Blood Glucose Limit" },
+        "lastA1c": { "type": "number", "description": "Last recorded HbA1c" },
+        "name": { "type": "string", "maxLength": 100 },
+        "isConfigured": { "type": "boolean" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["icr", "isf", "targetBg", "lowBgLimit", "highBgLimit", "isConfigured", "createdAt", "updatedAt"]
+    },
+    "MealRecord": {
+      "title": "Meal Record",
+      "description": "Record of a meal analyzed by AI",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "maxLength": 100 },
+        "image": { "type": "string", "maxLength": 5000000 },
+        "mealDescription": { "type": "string", "maxLength": 500 },
+        "weightGrams": { "type": "number" },
+        "netCarbs": { "type": "number" },
+        "mealBolus": { "type": "number" },
+        "correctionBolus": { "type": "number" },
+        "totalDose": { "type": "number" },
+        "currentBg": { "type": "number" },
+        "isExerciseMode": { "type": "boolean" },
+        "isEstimatedWeight": { "type": "boolean" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["timestamp", "mealDescription", "weightGrams", "netCarbs", "mealBolus", "correctionBolus", "totalDose", "createdAt"]
+    },
+    "FavoriteMeal": {
+      "title": "Favorite Meal",
+      "description": "Saved favorite meals",
+      "type": "object",
+      "properties": {
+        "mealDescription": { "type": "string", "maxLength": 5000 },
+        "netCarbsPer100g": { "type": "number" },
+        "image": { "type": "string", "maxLength": 5000000 },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["mealDescription", "netCarbsPer100g", "createdAt"]
+    },
+    "BasalLog": {
+      "title": "Basal Insulin Log",
+      "description": "Logs of daily basal insulin doses",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "maxLength": 100 },
+        "dose": { "type": "number" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["timestamp", "dose", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user settings"
+    },
+    "users/{userId}/meals/{mealId}": {
+      "schema": { "$ref": "#/entities/MealRecord" },
+      "description": "Stores user meal records"
+    },
+    "users/{userId}/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/FavoriteMeal" },
+      "description": "Stores user favorite meals"
+    },
+    "users/{userId}/basalLogs/{logId}": {
+      "schema": { "$ref": "#/entities/BasalLog" },
+      "description": "Stores user basal logs"
+    }
+  }
+}
